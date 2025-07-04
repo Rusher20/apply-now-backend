@@ -2,12 +2,39 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type JobApplication {
+  id: Int!
+  name: String!
+  gender: String!
+  email: String!
+  contactNumber: String!
+  address: String!
+  position: String!
+  city: String!
+  province: String!
+  region: String!
+  expectedSalary: String!
+  applicationLetter: String!
+  resumeUrl: String
+  createdAt: DateTime!
+  status: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Query {
   hello: String!
+  jobApplications: [JobApplication!]!
 }
 
 type Mutation {
   submitApplication(input: CreateApplicationInput!, file: Upload!): Boolean!
+  deleteApplication(id: Int!): JobApplication!
+  updateApplicationStatus(id: Int!, status: String!): JobApplication!
+  login(email: String!, password: String!): String!
 }
 
 input CreateApplicationInput {

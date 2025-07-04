@@ -4,6 +4,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { ApplicationModule } from './application/application.module';
 import { PrismaService } from './prisma.service';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { PrismaService } from './prisma.service';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     ApplicationModule,
+    AuthModule,
+    UserModule
   ],
   providers: [PrismaService],
 })

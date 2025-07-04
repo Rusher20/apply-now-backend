@@ -14,6 +14,8 @@ export class JobApplication {
   @Field() region: string;
   @Field() expectedSalary: string;
   @Field() applicationLetter: string;
-  @Field() resumeUrl: string ;
+   @Field(() => String,{ nullable: true })
+  resumeUrl?: string | null;
   @Field() createdAt: Date;
+  @Field() status: string;
 }

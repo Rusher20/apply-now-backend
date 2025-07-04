@@ -1,11 +1,11 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query,Int } from '@nestjs/graphql';
 import { ApplicationService } from './application.service';
 import { CreateApplicationInput } from './dto/create-application.input';
 import { JobApplication } from './entities/job-application.entity';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { createWriteStream, existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
-import { plainToInstance } from 'class-transformer';
+
 
 @Resolver(() => JobApplication)
 export class ApplicationResolver {
@@ -44,4 +44,25 @@ export class ApplicationResolver {
   hello(): string {
     return 'Hello World!';
   }
+
+  @Query(() => [JobApplication])
+  async jobApplications(): Promise<JobApplication[]> {
+    return this.service.findAll()
+  }
+
+  @Mutation(() => JobApplication)
+async deleteApplication(
+  @Args('id', { type: () => Int }) id: number,
+): Promise<JobApplication> {
+  return this.service.delete(id);
+}
+
+@Mutation(() => JobApplication)
+async updateApplicationStatus(
+  @Args('id', { type: () => Int }) id: number,
+  @Args('status') status: string,
+) {
+  return this.service.updateStatus(id, status);
+}
+
 }
