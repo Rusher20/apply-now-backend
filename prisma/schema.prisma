@@ -15,19 +15,78 @@ model User {
 }
 
 model JobApplication {
-  id                 Int      @id @default(autoincrement())
+  id                   Int      @id @default(autoincrement())
+  createdAt            DateTime @default(now())
+  confidentialityAgreed Boolean
+
+  // Basic Info
   name               String
+  age                String
   gender             String
   email              String
   contactNumber      String
   address            String
-  position           String
   city               String
   province           String
-  region             String
-  expectedSalary     String
-  applicationLetter  String
+  education          String
+
+  // Application Source
+  applicationSource  String
+  referralName       String?
+  hasStableInternet  String
+  internetProvider   String?
+
+  // Position
+  position           String
+
+  // Role Specific
+  roleSpecific       Json
+
+  // Files
   resumeUrl          String?
-  createdAt          DateTime @default(now())
-  status            String   @default("pending")
+  applicationLetter  String
+
+  status             String   @default("pending")
+}
+
+model Position {
+  id          Int        @id @default(autoincrement())
+  value       String     @unique
+  title       String
+  description String
+  icon        String
+  isActive    Boolean    @default(true)
+  questions   Question[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Question {
+  id          Int        @id @default(autoincrement())
+  positionId  Int
+  type        QuestionType
+  label       String
+  placeholder String?
+  required    Boolean
+  options     Option[]
+  position    Position   @relation(fields: [positionId], references: [id], onDelete: Cascade)
+}
+
+model Option {
+  id          Int        @id @default(autoincrement())
+  value       String
+  requiresInput Boolean 
+  inputLabel    String?
+  questionId  Int
+  question    Question   @relation(fields: [questionId], references: [id], onDelete: Cascade) 
+}
+
+enum QuestionType {
+  text
+  textarea
+  number
+  select
+  radio
+  checkbox
+  dropdown
 }

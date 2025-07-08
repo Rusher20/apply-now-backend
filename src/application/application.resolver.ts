@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, Query,Int } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, Int } from '@nestjs/graphql';
 import { ApplicationService } from './application.service';
 import { CreateApplicationInput } from './dto/create-application.input';
 import { JobApplication } from './entities/job-application.entity';
@@ -6,12 +6,11 @@ import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { createWriteStream, existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
-
 @Resolver(() => JobApplication)
 export class ApplicationResolver {
   constructor(private readonly service: ApplicationService) {}
 
-   @Mutation(() => Boolean)
+  @Mutation(() => Boolean)
   async submitApplication(
     @Args('input') input: CreateApplicationInput,
     @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,
@@ -40,28 +39,23 @@ export class ApplicationResolver {
     return true;
   }
 
-  @Query(() => String)
-  hello(): string {
-    return 'Hello World!';
-  }
-
-  @Query(() => [JobApplication])
+ @Query(() => [JobApplication])
   async jobApplications(): Promise<JobApplication[]> {
-    return this.service.findAll()
+    return this.service.findAll();
   }
 
-  @Mutation(() => JobApplication)
-async deleteApplication(
-  @Args('id', { type: () => Int }) id: number,
-): Promise<JobApplication> {
-  return this.service.delete(id);
-}
+   @Mutation(() => JobApplication)
+  async deleteApplication(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<JobApplication> {
+    return this.service.delete({ id });
+  }
 
-@Mutation(() => JobApplication)
+ @Mutation(() => JobApplication)
 async updateApplicationStatus(
   @Args('id', { type: () => Int }) id: number,
   @Args('status') status: string,
-) {
+): Promise<JobApplication> {
   return this.service.updateStatus(id, status);
 }
 
