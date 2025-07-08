@@ -4,19 +4,25 @@
 
 type JobApplication {
   id: Int!
+  createdAt: DateTime!
+  confidentialityAgreed: Boolean!
   name: String!
+  age: String!
   gender: String!
   email: String!
   contactNumber: String!
   address: String!
-  position: String!
   city: String!
   province: String!
-  region: String!
-  expectedSalary: String!
-  applicationLetter: String!
+  education: String!
+  applicationSource: String!
+  referralName: String
+  hasStableInternet: String!
+  internetProvider: String
+  position: String!
+  roleSpecific: JSON
   resumeUrl: String
-  createdAt: DateTime!
+  applicationLetter: String!
   status: String!
 }
 
@@ -25,9 +31,52 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Option {
+  id: Int!
+  value: String!
+  requiresInput: Boolean
+  inputLabel: String
+}
+
+type Question {
+  id: Int!
+  type: QuestionType!
+  label: String!
+  placeholder: String
+  required: Boolean!
+  options: [Option!]!
+}
+
+enum QuestionType {
+  text
+  textarea
+  number
+  select
+  radio
+  checkbox
+  dropdown
+}
+
+type Position {
+  id: Int!
+  value: String!
+  title: String!
+  description: String!
+  icon: String!
+  isActive: Boolean!
+  questions: [Question!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
-  hello: String!
   jobApplications: [JobApplication!]!
+  positions: [Position!]!
 }
 
 type Mutation {
@@ -35,22 +84,58 @@ type Mutation {
   deleteApplication(id: Int!): JobApplication!
   updateApplicationStatus(id: Int!, status: String!): JobApplication!
   login(email: String!, password: String!): String!
+  createPosition(data: CreatePositionInput!): Position!
+  deletePosition(id: Int!): Boolean!
+  updatePosition(id: Int!, data: CreatePositionInput!): Position!
 }
 
 input CreateApplicationInput {
   name: String!
+  age: String!
   gender: String!
   email: String!
   contactNumber: String!
   address: String!
-  position: String!
   city: String!
   province: String!
-  region: String!
-  expectedSalary: String!
-  applicationLetter: String!
+  education: String!
+  confidentialityAgreed: Boolean!
+  applicationSource: String!
+  referralName: String
+  hasStableInternet: String!
+  internetProvider: String
+  position: String!
+  roleSpecific: JSONObject!
   resumeUrl: String
+  applicationLetter: String!
 }
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+input CreatePositionInput {
+  title: String!
+  description: String!
+  icon: String!
+  isActive: Boolean!
+  questions: [CreateQuestionInput!]!
+}
+
+input CreateQuestionInput {
+  type: QuestionType!
+  label: String!
+  placeholder: String
+  required: Boolean!
+  options: [CreateOptionInput!]
+}
+
+input CreateOptionInput {
+  value: String!
+  requiresInput: Boolean
+  inputLabel: String
+}
