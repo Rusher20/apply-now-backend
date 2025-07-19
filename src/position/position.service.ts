@@ -23,7 +23,6 @@ export class PositionService {
       data: {
         title: data.title,
         description: data.description,
-        icon: data.icon,
         isActive: data.isActive,
         value: data.title.toLowerCase().replace(/\s+/g, '-'),
         questions: {
@@ -77,7 +76,6 @@ export class PositionService {
       data: {
         title: data.title,
         description: data.description,
-        icon: data.icon,
         isActive: data.isActive,
         value: data.title.toLowerCase().replace(/\s+/g, '-'),
         updatedAt: new Date(),

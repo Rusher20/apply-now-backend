@@ -14,10 +14,7 @@ export class Position {
 
   @Field()
   description: string;
-
-  @Field()
-  icon: string;
-
+  
   @Field()
   isActive: boolean;
 

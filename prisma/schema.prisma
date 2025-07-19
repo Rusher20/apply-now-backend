@@ -44,7 +44,6 @@ model JobApplication {
 
   // Files
   resumeUrl          String?
-  applicationLetter  String
 
   status             String   @default("pending")
 }
@@ -54,7 +53,6 @@ model Position {
   value       String     @unique
   title       String
   description String
-  icon        String
   isActive    Boolean    @default(true)
   questions   Question[]
   createdAt   DateTime   @default(now())
@@ -82,10 +80,8 @@ model Option {
 }
 
 enum QuestionType {
-  text
   textarea
   number
-  select
   radio
   checkbox
   dropdown

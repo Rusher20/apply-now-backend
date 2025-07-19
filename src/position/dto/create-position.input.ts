@@ -10,9 +10,6 @@ export class CreatePositionInput {
   description: string;
 
   @Field()
-  icon: string;
-
-  @Field()
   isActive: boolean;
 
   @Field(() => [CreateQuestionInput])
