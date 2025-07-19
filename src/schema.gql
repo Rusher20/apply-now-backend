@@ -22,7 +22,6 @@ type JobApplication {
   position: String!
   roleSpecific: JSON
   resumeUrl: String
-  applicationLetter: String!
   status: String!
 }
 
@@ -53,10 +52,8 @@ type Question {
 }
 
 enum QuestionType {
-  text
   textarea
   number
-  select
   radio
   checkbox
   dropdown
@@ -67,7 +64,6 @@ type Position {
   value: String!
   title: String!
   description: String!
-  icon: String!
   isActive: Boolean!
   questions: [Question!]!
   createdAt: DateTime!
@@ -107,7 +103,6 @@ input CreateApplicationInput {
   position: String!
   roleSpecific: JSONObject!
   resumeUrl: String
-  applicationLetter: String!
 }
 
 """
@@ -121,7 +116,6 @@ scalar Upload
 input CreatePositionInput {
   title: String!
   description: String!
-  icon: String!
   isActive: Boolean!
   questions: [CreateQuestionInput!]!
 }

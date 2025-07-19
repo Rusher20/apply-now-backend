@@ -25,5 +25,4 @@ export class CreateApplicationInput {
   @Field(() => GraphQLJSONObject) roleSpecific: any;
 
   @Field({ nullable: true }) resumeUrl?: string;
-  @Field() applicationLetter: string;
 }

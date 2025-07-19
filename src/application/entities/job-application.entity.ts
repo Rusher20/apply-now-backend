@@ -61,8 +61,5 @@ export class JobApplication {
   resumeUrl: string | null;
 
   @Field()
-  applicationLetter: string;
-
-  @Field()
   status: string;
 }
