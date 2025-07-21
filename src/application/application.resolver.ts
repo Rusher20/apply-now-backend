@@ -33,7 +33,7 @@ export class ApplicationResolver {
       out.on('error', reject);
     });
 
-    const resumeUrl = `http://localhost:3000/uploads/resumes/${storedFilename}`;
+    const resumeUrl = `http://apply-now-backend-production.up.railway.app/uploads/resumes/${storedFilename}`;
     await this.service.create({ ...input, resumeUrl });
 
     return true;
