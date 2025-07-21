@@ -5,10 +5,13 @@ import { JobApplication } from './entities/job-application.entity';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { createWriteStream, existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
+import { ConfigService } from '@nestjs/config';
 
 @Resolver(() => JobApplication)
 export class ApplicationResolver {
-  constructor(private readonly service: ApplicationService) {}
+  constructor(private readonly service: ApplicationService,
+    private readonly configService: ConfigService
+  ) {}
 
   @Mutation(() => Boolean)
   async submitApplication(
@@ -33,7 +36,11 @@ export class ApplicationResolver {
       out.on('error', reject);
     });
 
-    const resumeUrl = `http://apply-now-backend-production.up.railway.app/uploads/resumes/${storedFilename}`;
+   const baseUrl = this.configService.get<string>('BASE_URL');
+    const resumeUrl = baseUrl
+      ? `${baseUrl}/uploads/resumes/${storedFilename}`
+      : `/uploads/resumes/${storedFilename}`;
+
     await this.service.create({ ...input, resumeUrl });
 
     return true;
