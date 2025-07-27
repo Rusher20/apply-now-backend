@@ -7,7 +7,7 @@ type JobApplication {
   createdAt: DateTime!
   confidentialityAgreed: Boolean!
   name: String!
-  age: String!
+  age: Int!
   gender: String!
   email: String!
   contactNumber: String!
@@ -87,7 +87,7 @@ type Mutation {
 
 input CreateApplicationInput {
   name: String!
-  age: String!
+  age: Int!
   gender: String!
   email: String!
   contactNumber: String!

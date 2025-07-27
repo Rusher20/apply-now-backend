@@ -21,7 +21,7 @@ model JobApplication {
 
   // Basic Info
   name               String
-  age                String
+  age                Int
   gender             String
   email              String
   contactNumber      String

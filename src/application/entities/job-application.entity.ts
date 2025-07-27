@@ -15,8 +15,8 @@ export class JobApplication {
   @Field()
   name: string;
 
-  @Field()
-  age: string;
+  @Field(() => Int)
+  age: number;
 
   @Field()
   gender: string;

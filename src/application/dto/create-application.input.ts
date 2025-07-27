@@ -1,10 +1,11 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, Int,} from '@nestjs/graphql';
 import { GraphQLJSONObject } from 'graphql-type-json';
 
 @InputType()
 export class CreateApplicationInput {
   @Field() name: string;
-  @Field() age: string;
+  @Field(() => Int)
+  age: number;
   @Field() gender: string;
   @Field() email: string;
   @Field() contactNumber: string;
